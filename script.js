@@ -3,7 +3,7 @@
 ** numMoves adds to score and returns each players score
 */
 function CreatePlayer(name) {
-    let displayName = name;
+    let displayName = "@" + name;
     let score = 0;
 
     const numMoves = () => {
@@ -34,8 +34,8 @@ const Gameboard = (function() {
 
     const getBoard = () => board;
 
-    const addMove = (row, column, playerMove) => {
-        board[row][column] = playerMove;
+    const addMove = (row, column, token) => {
+        board[row][column] = token;
     }   
 
     return {getBoard, addMove};
@@ -50,8 +50,8 @@ const Gameboard = (function() {
 function Cell() {
     let value = "";
 
-    const setValue = (playerToken) => {
-        value = playerToken;
+    const setValue = (token) => {
+        value = token;
     }
     const getValue = () => value;
 
@@ -59,4 +59,16 @@ function Cell() {
 }
 
 /* DisplayController() factory function - IIFE to only create the game once
+** Controls game flow by creating two players, state of game turns,
+** and if anyone has won
 */
+const DisplayController = (function() {
+    let user1 = prompt("Enter a username for player1:");
+    const player1 = CreatePlayer(user1);
+    console.log(player1.displayName);
+
+    
+    let user2 = prompt("Enter a username for player2:");
+    const player2 = CreatePlayer(user2);
+    console.log(player2.displayName);
+})();
