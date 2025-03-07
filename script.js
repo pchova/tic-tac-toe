@@ -19,6 +19,25 @@ function CreatePlayer(name) {
 ** printBoard displays the board in DOM
 ** addMove adds a player move to the board
 */
+function Gameboard() {
+    const rows = 3;
+    const columns = 3;
+    const board = [];
+
+    //create a 2D array that will be the state of the gameboard
+    for(let i = 0; i < rows; i++) {
+        board[i] = [];
+        for(let j = 0; j < columns; j++) {
+            board[i].push("♡");
+        }
+    }
+
+    const getBoard = () => board;
+
+    const addMove = () => {};
+
+    return {getBoard, addMove};
+}
 
 /* DisplayController() factory function - IIFE to only create the game once
 */
