@@ -16,10 +16,10 @@ function CreatePlayer(name) {
 
 /* Gameboard() factory function - IIFE to only call the board once 
 ** getBoard creates the board 
-** printBoard displays the board in DOM
+** printBoard displays the board in DOM (not there yet)
 ** addMove adds a player move to the board
 */
-function Gameboard() {
+const Gameboard = (function() {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -37,7 +37,7 @@ function Gameboard() {
     const addMove = () => {};
 
     return {getBoard, addMove};
-}
+})();
 
 /* DisplayController() factory function - IIFE to only create the game once
 */
