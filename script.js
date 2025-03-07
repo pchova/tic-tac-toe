@@ -34,8 +34,8 @@ const Gameboard = (function() {
 
     const getBoard = () => board;
 
-    const addMove = (row, column, token) => {
-        board[row][column] = token;
+    const addMove = (row, column, playerMove) => {
+        board[row][column] = playerMove;
     }   
 
     return {getBoard, addMove};
@@ -43,7 +43,7 @@ const Gameboard = (function() {
 
 /* Cell() factory function represent one square on the board 
 ** Each cell can have one of the following: 
-** " ": no token
+** "": no token
 ** "♡": PLayer 1's token
 ** "🌙": Player 2's token
 */
