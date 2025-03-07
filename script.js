@@ -63,12 +63,42 @@ function Cell() {
 ** and if anyone has won
 */
 const DisplayController = (function() {
-    let user1 = prompt("Enter a username for player1:");
-    const player1 = CreatePlayer(user1);
-    console.log(player1.displayName);
+    const player1 = CreatePlayer("pchova");
+    const player2 = CreatePlayer("anhellll");
 
-    
-    let user2 = prompt("Enter a username for player2:");
-    const player2 = CreatePlayer(user2);
-    console.log(player2.displayName);
+    const players = [
+        {
+            name: player1.displayName,
+            token: "♡"
+        },
+        {
+            name: player2.displayName,
+            token: "🌙"
+        }
+    ]
+
+    console.log(`user: ${players[0].name} token: ${players[0].token}`);
+    console.log(`user: ${players[1].name} token: ${players[1].token}`);
+
+    let activePlayer = players[0];
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+
+    const getActivePlayer = () => activePlayer;
+
+
+    const playRound = (r, c) => {
+        let row = r;
+        let column = c;
+
+        let token = activePlayer.token;
+
+        Gameboard.addMove(row, column, token);
+        console.log(Gameboard.getBoard());
+        switchPlayerTurn();
+    };
+
+    return {playRound, switchPlayerTurn, getActivePlayer};
 })();
