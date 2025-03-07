@@ -28,16 +28,35 @@ const Gameboard = (function() {
     for(let i = 0; i < rows; i++) {
         board[i] = [];
         for(let j = 0; j < columns; j++) {
-            board[i].push("♡");
+            board[i].push(Cell());
         }
     }
 
     const getBoard = () => board;
 
-    const addMove = () => {};
+    const addMove = (row, column, token) => {
+        board[row][column] = token;
+    }   
 
     return {getBoard, addMove};
 })();
+
+/* Cell() factory function represent one square on the board 
+** Each cell can have one of the following: 
+** " ": no token
+** "♡": PLayer 1's token
+** "🌙": Player 2's token
+*/
+function Cell() {
+    let value = "";
+
+    const setValue = (playerToken) => {
+        value = playerToken;
+    }
+    const getValue = () => value;
+
+    return {setValue, getValue};
+}
 
 /* DisplayController() factory function - IIFE to only create the game once
 */
