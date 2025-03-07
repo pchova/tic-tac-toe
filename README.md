@@ -8,7 +8,7 @@ Game asks for input for player 1 and player 2 usernames
 
 Game shows winner at the end, with option to restart game or play again
 
-##License
+## License
 This JavaScript project is a part of [The Odin Project](https://www.theodinproject.com/), an open source Web Development cirriculum.
 
 
