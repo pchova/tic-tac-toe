@@ -4,14 +4,8 @@
 */
 function CreatePlayer(name) {
     let displayName = "@" + name;
-    let score = 0;
 
-    const numMoves = () => {
-        score++;
-        return `${displayName}'s number of moves: ${score}`;
-    }
-
-    return {displayName, numMoves};
+    return {displayName};
 }
 
 /* Gameboard() factory function - IIFE to only call the board once 
@@ -35,13 +29,11 @@ const Gameboard = (function() {
     const getBoard = () => board;
 
     const addMove = (row, column, token) => {
-        board[row][column] = token;
-
-        /* if(board[row][column].getValue() !== ""){
+        if(board[row][column].getValue() !== "") {
             return;
         } else {
-            board[row][column] = setValue(token);
-        } */
+            board[row][column].setValue(token);
+        }
     }   
 
     return {getBoard, addMove};
@@ -59,6 +51,7 @@ function Cell() {
     const setValue = (token) => {
         value = token;
     }
+
     const getValue = () => value;
 
     return {setValue, getValue};
@@ -83,8 +76,8 @@ const DisplayController = (function() {
         }
     ]
 
-    console.log(`user: ${players[0].name} token: ${players[0].token}`);
-    console.log(`user: ${players[1].name} token: ${players[1].token}`);
+    console.log(`user: ${players[0].name}, token: ${players[0].token}`);
+    console.log(`user: ${players[1].name}, token: ${players[1].token}`);
     console.log(`Its ${players[0].name}'s turn first!`);
 
     /* starting with player 1 on the first round 
@@ -97,22 +90,22 @@ const DisplayController = (function() {
     };
     const getActivePlayer = () => activePlayer;
 
+    const playRound = (r, c) => {
+        let row = r;
+        let column = c;
+        let userToken = activePlayer.token;
+        
+        Gameboard.addMove(row, column, userToken);
+        Gameboard.getBoard();
+
+        //switchPlayerTurn();
+        //printNextRound();
+    };
+
     const printNextRound = () => {
         console.log(Gameboard.getBoard());
         console.log(`It's ${activePlayer.name}'s turn!`);
     }
-
-    const playRound = (r, c) => {
-        let row = r;
-        let column = c;
-        let token = activePlayer.token;
-        //change token back to setValue() to fix
-
-        Gameboard.addMove(row, column, token);
-
-        switchPlayerTurn();
-        printNextRound();
-    };
 
     return {playRound, getActivePlayer};
 })();
