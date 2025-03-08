@@ -36,6 +36,12 @@ const Gameboard = (function() {
 
     const addMove = (row, column, token) => {
         board[row][column] = token;
+
+        /* if(board[row][column].getValue() !== ""){
+            return;
+        } else {
+            board[row][column] = setValue(token);
+        } */
     }   
 
     return {getBoard, addMove};
@@ -79,26 +85,34 @@ const DisplayController = (function() {
 
     console.log(`user: ${players[0].name} token: ${players[0].token}`);
     console.log(`user: ${players[1].name} token: ${players[1].token}`);
+    console.log(`Its ${players[0].name}'s turn first!`);
 
+    /* starting with player 1 on the first round 
+    ** switchPlayerTurn() switches between the two players
+    ** getActivePlayer() returns whose turn it is 
+    */
     let activePlayer = players[0];
-
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
-
     const getActivePlayer = () => activePlayer;
 
+    const printNextRound = () => {
+        console.log(Gameboard.getBoard());
+        console.log(`It's ${activePlayer.name}'s turn!`);
+    }
 
     const playRound = (r, c) => {
         let row = r;
         let column = c;
-
         let token = activePlayer.token;
+        //change token back to setValue() to fix
 
         Gameboard.addMove(row, column, token);
-        console.log(Gameboard.getBoard());
+
         switchPlayerTurn();
+        printNextRound();
     };
 
-    return {playRound, switchPlayerTurn, getActivePlayer};
+    return {playRound, getActivePlayer};
 })();
