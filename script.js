@@ -85,27 +85,25 @@ const DisplayController = (function() {
     ** getActivePlayer() returns whose turn it is 
     */
     let activePlayer = players[0];
+
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
     const getActivePlayer = () => activePlayer;
 
-    const playRound = (r, c) => {
-        let row = r;
-        let column = c;
-        let userToken = activePlayer.token;
-        
-        Gameboard.addMove(row, column, userToken);
-        Gameboard.getBoard();
-
-        //switchPlayerTurn();
-        //printNextRound();
+    const playRound = (row, column) => {
+        Gameboard.addMove(row, column, activePlayer.token);
+        switchPlayerTurn();
+        printNextRound();
     };
 
     const printNextRound = () => {
-        console.log(Gameboard.getBoard());
+        const board = Gameboard.getBoard();
+        const displayBoard = board.map(row => row.map(cell => cell.getValue()));
+
+        console.log(displayBoard);
         console.log(`It's ${activePlayer.name}'s turn!`);
     }
 
-    return {playRound, getActivePlayer};
+    return {getActivePlayer, playRound};
 })();
