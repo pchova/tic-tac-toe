@@ -30,6 +30,7 @@ const Gameboard = (function() {
 
     const addMove = (row, column, token) => {
         if(board[row][column].getValue() !== "") {
+            console.log(`Spot (${row},${column}) is taken. Please choose another space!`);
             return;
         } else {
             board[row][column].setValue(token);
@@ -93,6 +94,7 @@ const DisplayController = (function() {
 
     const playRound = (row, column) => {
         Gameboard.addMove(row, column, activePlayer.token);
+
         switchPlayerTurn();
         printNextRound();
     };
