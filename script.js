@@ -30,8 +30,7 @@ const Gameboard = (function() {
 
     const addMove = (row, column, token) => {
         if(board[row][column].getValue() !== "") {
-            console.log(`Spot (${row},${column}) is taken. Please choose another space!`);
-            return;
+            return false;
         } else {
             board[row][column].setValue(token);
         }
@@ -93,10 +92,13 @@ const DisplayController = (function() {
     const getActivePlayer = () => activePlayer;
 
     const playRound = (row, column) => {
-        Gameboard.addMove(row, column, activePlayer.token);
-
-        switchPlayerTurn();
-        printNextRound();
+        if(Gameboard.addMove(row, column, activePlayer.token) === false) {
+            return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
+        } else {
+            Gameboard.addMove(row, column, activePlayer.token);
+            switchPlayerTurn();
+            printNextRound();
+        }
     };
 
     const printNextRound = () => {
