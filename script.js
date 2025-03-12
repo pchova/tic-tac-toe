@@ -91,11 +91,19 @@ const DisplayController = (function() {
 
     let count = 0;
     const getCount = () => count;
-    const setCount = () => count++;
+    const setCount = () => ++count;
 
     const playRound = (row, column) => {
+        console.log(getCount());
+
         if(Gameboard.addMove(row, column, activePlayer.token) === false) {
             return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
+        } else if (getCount() === 8) {
+            //add function determineWinner() to determine if someone won!!!
+            //add if/else if/else statements to go through each situation
+            
+            console.log("nobody won. Please play again!");
+            return printBoard();
         } else {
             Gameboard.addMove(row, column, activePlayer.token);
             switchPlayerTurn();
@@ -114,5 +122,11 @@ const DisplayController = (function() {
         console.log(`It's ${activePlayer.name}'s turn!`);
     }
 
-    return {getActivePlayer, playRound};
+    const printBoard = () => {
+        const board = Gameboard.getBoard();
+        const displayBoard = board.map(row => row.map(cell => cell.getValue()));
+        console.log(displayBoard);
+    }
+
+    return {getActivePlayer, playRound, printNextRound};
 })();
