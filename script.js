@@ -80,16 +80,18 @@ const DisplayController = (function() {
     console.log(`user: ${players[1].name}, token: ${players[1].token}`);
     console.log(`Its ${players[0].name}'s turn first!`);
 
-    /* starting with player 1 on the first round 
-    ** switchPlayerTurn() switches between the two players
+    /* switchPlayerTurn() switches between the two players
     ** getActivePlayer() returns whose turn it is 
     */
     let activePlayer = players[0];
-
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
     const getActivePlayer = () => activePlayer;
+
+    let count = 0;
+    const getCount = () => count;
+    const setCount = () => count++;
 
     const playRound = (row, column) => {
         if(Gameboard.addMove(row, column, activePlayer.token) === false) {
@@ -99,6 +101,9 @@ const DisplayController = (function() {
             switchPlayerTurn();
             printNextRound();
         }
+
+        setCount();
+        console.log("count: " + getCount());
     };
 
     const printNextRound = () => {
