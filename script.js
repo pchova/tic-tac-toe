@@ -100,34 +100,18 @@ const DisplayController = (function() {
 
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
             return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
+        }
 
-        } else if (getCount() === 8) {
-
-            if (determineWinner() === true) {
-                console.log(`${activePlayer.name} won!`)
-                printBoard();
-                return restartGame();
-            } else {
-                console.log("Tie. Please play again!");
-                printBoard();
-                return restartGame();
-            }
-
-        } else {
-            Gameboard.addMove(row, column, activePlayer.token);
-
-            if (determineWinner() === true) {
-                console.log(`${activePlayer.name} won!`);
-                printBoard();
-                return restartGame();
-            } else {
-                switchPlayerTurn();
-                printNextRound();
-            }
+        if (getCount() === 8 || determineWinner()) {
+            console.log(determineWinner() ? `${activePlayer.name} won!` : "Tie. Please play again!");
+            printBoard();
+            return restartGame();
         }
 
         setCount();
-    };
+        switchPlayerTurn();
+        printNextRound();
+    }
 
     const determineWinner = () => {
         const board = Gameboard.getBoard();
