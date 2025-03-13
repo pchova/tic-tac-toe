@@ -101,10 +101,6 @@ const DisplayController = (function() {
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
             return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
 
-        } else if (determineWinner() === true) {
-            console.log(`${activePlayer.name} won!`);
-            return restartGame();
-            
         } else if (getCount() === 8) {
 
             if (determineWinner() === true) {
@@ -112,15 +108,22 @@ const DisplayController = (function() {
                 printBoard();
                 return restartGame();
             } else {
-                console.log("Nobody won. Please play again!");
+                console.log("Tie. Please play again!");
                 printBoard();
                 return restartGame();
             }
 
         } else {
             Gameboard.addMove(row, column, activePlayer.token);
-            switchPlayerTurn();
-            printNextRound();
+
+            if (determineWinner() === true) {
+                console.log(`${activePlayer.name} won!`);
+                printBoard();
+                return restartGame();
+            } else {
+                switchPlayerTurn();
+                printNextRound();
+            }
         }
 
         setCount();
@@ -129,29 +132,29 @@ const DisplayController = (function() {
     const determineWinner = () => {
         const board = Gameboard.getBoard();
 
-        if (board[0][0].getValue() === 'X' && board[0][1].getValue() === 'X' && board[0][2].getValue() === 'X' || 
-            board[0][0].getValue() === 'Y' && board[0][1].getValue() === 'Y' && board[0][2].getValue() === 'Y') {
+        if ((board[0][0].getValue() === 'X' && board[0][1].getValue() === 'X' && board[0][2].getValue() === 'X') || 
+            (board[0][0].getValue() === 'O' && board[0][1].getValue() === 'O' && board[0][2].getValue() === 'O')) {
             return true;
-        } else if (board[1][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[1][2].getValue() === 'X' || 
-                   board[1][0].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[1][2].getValue() === 'Y') {
+        } else if ((board[1][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[1][2].getValue() === 'X') || 
+                   (board[1][0].getValue() === 'O' && board[1][1].getValue() === 'O' && board[1][2].getValue() === 'O')) {
             return true;
-        } else if (board[2][0].getValue() === 'X' && board[2][1].getValue() === 'X' && board[2][2].getValue() === 'X' || 
-                   board[2][0].getValue() === 'Y' && board[2][1].getValue() === 'Y' && board[2][2].getValue() === 'Y') {
+        } else if ((board[2][0].getValue() === 'X' && board[2][1].getValue() === 'X' && board[2][2].getValue() === 'X') || 
+                   (board[2][0].getValue() === 'O' && board[2][1].getValue() === 'O' && board[2][2].getValue() === 'O')) {
             return true;
-        } else if (board[0][0].getValue() === 'X' && board[1][0].getValue() === 'X' && board[2][0].getValue() === 'X' || 
-                   board[0][0].getValue() === 'Y' && board[1][0].getValue() === 'Y' && board[2][0].getValue() === 'Y') {
+        } else if ((board[0][0].getValue() === 'X' && board[1][0].getValue() === 'X' && board[2][0].getValue() === 'X') || 
+                   (board[0][0].getValue() === 'O' && board[1][0].getValue() === 'O' && board[2][0].getValue() === 'O')) {
             return true;
-        } else if (board[0][1].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][1].getValue() === 'X' || 
-                   board[0][1].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[2][1].getValue() === 'Y') {
+        } else if ((board[0][1].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][1].getValue() === 'X') || 
+                   (board[0][1].getValue() === 'O' && board[1][1].getValue() === 'O' && board[2][1].getValue() === 'O')) {
             return true;
-        } else if (board[0][2].getValue() === 'X' && board[1][2].getValue() === 'X' && board[2][2].getValue() === 'X' || 
-                   board[0][2].getValue() === 'Y' && board[1][2].getValue() === 'Y' && board[2][2].getValue() === 'Y') {
+        } else if ((board[0][2].getValue() === 'X' && board[1][2].getValue() === 'X' && board[2][2].getValue() === 'X') || 
+                   (board[0][2].getValue() === 'O' && board[1][2].getValue() === 'O' && board[2][2].getValue() === 'O')) {
             return true;
-        } else if (board[0][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][2].getValue() === 'X' || 
-                   board[0][0].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[2][2].getValue() === 'Y') {
+        } else if ((board[0][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][2].getValue() === 'X') || 
+                   (board[0][0].getValue() === 'O' && board[1][1].getValue() === 'O' && board[2][2].getValue() === 'O')) {
             return true;
-        } else if (board[0][2].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][0].getValue() === 'X' || 
-                   board[0][2].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[2][0].getValue() === 'Y') {
+        } else if ((board[0][2].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][0].getValue() === 'X') || 
+                   (board[0][2].getValue() === 'O' && board[1][1].getValue() === 'O' && board[2][0].getValue() === 'O')) {
             return true;
         } else {
             return false;
