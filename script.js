@@ -97,7 +97,6 @@ const DisplayController = (function() {
     ** Plays more rounds till count = 8, displays winner/tie
     ** Option to restart game  */
     const playRound = (row, column) => {
-        
         if(Gameboard.addMove(row, column, activePlayer.token) === false) {
             return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
         } else if (getCount() === 8) {
@@ -113,7 +112,6 @@ const DisplayController = (function() {
         }
 
         setCount();
-        console.log("count: " + getCount());
     };
 
     /* Print's current board state and active player's turn */
@@ -134,7 +132,7 @@ const DisplayController = (function() {
 
         const newBoard = Gameboard.getBoard();
         for(let i = 0; i < newBoard.length; i++) {
-            for(let j = 0; j < newBoard[i].length; j++) {
+            for (let j = 0; j < newBoard[i].length; j++) {
                 newBoard[i][j].setValue("");
             }
         }
