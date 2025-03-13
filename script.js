@@ -114,6 +114,8 @@ const DisplayController = (function() {
         printNextRound();
     }
 
+    /* determineWinner() checks all instances of 3 in a rows on the board 
+    ** and returns true if there is a winner */
     const determineWinner = () => {
         const board = Gameboard.getBoard();
 
@@ -146,13 +148,13 @@ const DisplayController = (function() {
         }
     }
 
-    /* Print's current board state and active player's turn */
+    /* printNextRound() displays current board state and active player's turn */
     const printNextRound = () => {
         printBoard();
         console.log(`It's ${activePlayer.name}'s turn!`);
     }
 
-    /* Restarts game by setting count to 0 and clearing board array to be empty */
+    /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
     const restartGame = () => {
         switchPlayerTurn();
         console.log(`Restarting Game....it's ${activePlayer.name}'s turn!`);
@@ -169,6 +171,7 @@ const DisplayController = (function() {
         printBoard();
     }
 
+    /* printBoard() maps board array and displays all values in Cell */
     const printBoard = () => {
         const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
         console.log(displayBoard);
