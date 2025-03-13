@@ -148,10 +148,7 @@ const DisplayController = (function() {
 
     /* Print's current board state and active player's turn */
     const printNextRound = () => {
-        const board = Gameboard.getBoard();
-        const displayBoard = board.map(row => row.map(cell => cell.getValue()));
-
-        console.log(displayBoard);
+        printBoard();
         console.log(`It's ${activePlayer.name}'s turn!`);
     }
 
@@ -173,31 +170,10 @@ const DisplayController = (function() {
     }
 
     const printBoard = () => {
-        const board = Gameboard.getBoard();
-        const displayBoard = board.map(row => row.map(cell => cell.getValue()));
+        const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
         console.log(displayBoard);
+        return displayBoard;
     } 
 
     return {getActivePlayer, playRound, printBoard};
 })();
-
-
-// if (/*tokens across in position (0,0) (0,1) (0,2) */) {
-//     return true;
-// } else if (/* tokens across in position (1,0) (1,1) (1,2) */) {
-//     return true;
-// } else if (/*tokens across in position (2,0) (2,1) (2,2) */) {
-//     return true;
-// } else if (/*tokens horizontal in (0,0) (1,0) (2,0) */) {
-//     return true;
-// } else if (/*tokens horizontal in (0,1) (1,1) (2,1) */) {
-//     return true;
-// } else if (/*tokens horizontal in (0,2) (1,2) (2,2) */) {
-//     return true;
-// } else if (/*tokens across in (0,0) (1,1) (2,2) */) {
-//     return true;
-// } else if (/*tokens across in (0,2) (1,1) (2,0) */) {
-//     return true;
-// } else {
-//     return false;
-// }
