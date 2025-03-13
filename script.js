@@ -119,33 +119,30 @@ const DisplayController = (function() {
     const determineWinner = () => {
         const board = Gameboard.getBoard();
 
-        if ((board[0][0].getValue() === 'X' && board[0][1].getValue() === 'X' && board[0][2].getValue() === 'X') || 
-            (board[0][0].getValue() === 'O' && board[0][1].getValue() === 'O' && board[0][2].getValue() === 'O')) {
-            return true;
-        } else if ((board[1][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[1][2].getValue() === 'X') || 
-                   (board[1][0].getValue() === 'O' && board[1][1].getValue() === 'O' && board[1][2].getValue() === 'O')) {
-            return true;
-        } else if ((board[2][0].getValue() === 'X' && board[2][1].getValue() === 'X' && board[2][2].getValue() === 'X') || 
-                   (board[2][0].getValue() === 'O' && board[2][1].getValue() === 'O' && board[2][2].getValue() === 'O')) {
-            return true;
-        } else if ((board[0][0].getValue() === 'X' && board[1][0].getValue() === 'X' && board[2][0].getValue() === 'X') || 
-                   (board[0][0].getValue() === 'O' && board[1][0].getValue() === 'O' && board[2][0].getValue() === 'O')) {
-            return true;
-        } else if ((board[0][1].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][1].getValue() === 'X') || 
-                   (board[0][1].getValue() === 'O' && board[1][1].getValue() === 'O' && board[2][1].getValue() === 'O')) {
-            return true;
-        } else if ((board[0][2].getValue() === 'X' && board[1][2].getValue() === 'X' && board[2][2].getValue() === 'X') || 
-                   (board[0][2].getValue() === 'O' && board[1][2].getValue() === 'O' && board[2][2].getValue() === 'O')) {
-            return true;
-        } else if ((board[0][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][2].getValue() === 'X') || 
-                   (board[0][0].getValue() === 'O' && board[1][1].getValue() === 'O' && board[2][2].getValue() === 'O')) {
-            return true;
-        } else if ((board[0][2].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][0].getValue() === 'X') || 
-                   (board[0][2].getValue() === 'O' && board[1][1].getValue() === 'O' && board[2][0].getValue() === 'O')) {
-            return true;
-        } else {
-            return false;
+        const winningValues = [
+            [[0,0], [0,1], [0,2]],
+            [[1,0], [1,1], [1,2]],
+            [[2,0], [2,1], [2,2]],
+            [[0,0], [1,0], [2,0]],
+            [[0,1], [1,1], [2,1]],
+            [[0,2], [1,2], [2,2]],
+            [[0,0], [1,1], [2,2]],
+            [[0,2], [1,1], [2,0]]
+        ];
+
+        for (let win of winningValues) {
+            const [a,b,c] = win;
+
+            const cellA = board[a[0]][a[1]].getValue();
+            const cellB = board[b[0]][b[1]].getValue();
+            const cellC = board[c[0]][c[1]].getValue();
+
+            if (cellA !== "" && cellA === cellB && cellB === cellC) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     /* printNextRound() displays current board state and active player's turn */
