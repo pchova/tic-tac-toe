@@ -97,14 +97,26 @@ const DisplayController = (function() {
     ** Plays more rounds till count = 8, displays winner/tie
     ** Option to restart game  */
     const playRound = (row, column) => {
-        if(Gameboard.addMove(row, column, activePlayer.token) === false) {
+
+        if (Gameboard.addMove(row, column, activePlayer.token) === false) {
             return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
-        } else if (getCount() === 8) {
-            /* add function determineWinner() to determine if someone won,
-            ** and add if/else if/else statements to go through each situation */
-            console.log("nobody won. Please play again!");
-            printBoard();
+
+        } else if (determineWinner() === true) {
+            console.log(`${activePlayer.name} won!`);
             return restartGame();
+            
+        } else if (getCount() === 8) {
+
+            if (determineWinner() === true) {
+                console.log(`${activePlayer.name} won!`)
+                printBoard();
+                return restartGame();
+            } else {
+                console.log("Nobody won. Please play again!");
+                printBoard();
+                return restartGame();
+            }
+
         } else {
             Gameboard.addMove(row, column, activePlayer.token);
             switchPlayerTurn();
@@ -113,6 +125,38 @@ const DisplayController = (function() {
 
         setCount();
     };
+
+    const determineWinner = () => {
+        const board = Gameboard.getBoard();
+
+        if (board[0][0].getValue() === 'X' && board[0][1].getValue() === 'X' && board[0][2].getValue() === 'X' || 
+            board[0][0].getValue() === 'Y' && board[0][1].getValue() === 'Y' && board[0][2].getValue() === 'Y') {
+            return true;
+        } else if (board[1][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[1][2].getValue() === 'X' || 
+                   board[1][0].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[1][2].getValue() === 'Y') {
+            return true;
+        } else if (board[2][0].getValue() === 'X' && board[2][1].getValue() === 'X' && board[2][2].getValue() === 'X' || 
+                   board[2][0].getValue() === 'Y' && board[2][1].getValue() === 'Y' && board[2][2].getValue() === 'Y') {
+            return true;
+        } else if (board[0][0].getValue() === 'X' && board[1][0].getValue() === 'X' && board[2][0].getValue() === 'X' || 
+                   board[0][0].getValue() === 'Y' && board[1][0].getValue() === 'Y' && board[2][0].getValue() === 'Y') {
+            return true;
+        } else if (board[0][1].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][1].getValue() === 'X' || 
+                   board[0][1].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[2][1].getValue() === 'Y') {
+            return true;
+        } else if (board[0][2].getValue() === 'X' && board[1][2].getValue() === 'X' && board[2][2].getValue() === 'X' || 
+                   board[0][2].getValue() === 'Y' && board[1][2].getValue() === 'Y' && board[2][2].getValue() === 'Y') {
+            return true;
+        } else if (board[0][0].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][2].getValue() === 'X' || 
+                   board[0][0].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[2][2].getValue() === 'Y') {
+            return true;
+        } else if (board[0][2].getValue() === 'X' && board[1][1].getValue() === 'X' && board[2][0].getValue() === 'X' || 
+                   board[0][2].getValue() === 'Y' && board[1][1].getValue() === 'Y' && board[2][0].getValue() === 'Y') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /* Print's current board state and active player's turn */
     const printNextRound = () => {
@@ -146,5 +190,26 @@ const DisplayController = (function() {
         console.log(displayBoard);
     } 
 
-    return {getActivePlayer, playRound, printBoard, getCount};
+    return {getActivePlayer, playRound, printBoard};
 })();
+
+
+// if (/*tokens across in position (0,0) (0,1) (0,2) */) {
+//     return true;
+// } else if (/* tokens across in position (1,0) (1,1) (1,2) */) {
+//     return true;
+// } else if (/*tokens across in position (2,0) (2,1) (2,2) */) {
+//     return true;
+// } else if (/*tokens horizontal in (0,0) (1,0) (2,0) */) {
+//     return true;
+// } else if (/*tokens horizontal in (0,1) (1,1) (2,1) */) {
+//     return true;
+// } else if (/*tokens horizontal in (0,2) (1,2) (2,2) */) {
+//     return true;
+// } else if (/*tokens across in (0,0) (1,1) (2,2) */) {
+//     return true;
+// } else if (/*tokens across in (0,2) (1,1) (2,0) */) {
+//     return true;
+// } else {
+//     return false;
+// }
