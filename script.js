@@ -42,8 +42,8 @@ const Gameboard = (function() {
 /* Cell() factory function represent one square on the board 
 ** Each cell can have one of the following: 
 ** "": no token
-** "♡": PLayer 1's token
-** "🌙": Player 2's token
+** "X": PLayer 1's token
+** "O": Player 2's token
 */
 function Cell() {
     let value = "";
@@ -67,11 +67,11 @@ const DisplayController = (function() {
     const players = [
         {
             name: player1.displayName,
-            token: "♡"
+            token: "X"
         },
         {
             name: player2.displayName,
-            token: "🌙"
+            token: "O"
         }
     ]
 
