@@ -31,9 +31,10 @@ const Gameboard = (function() {
     const addMove = (row, column, token) => {
         if(board[row][column].getValue() !== "") {
             return false;
-        } else {
-            board[row][column].setValue(token);
         }
+        
+        board[row][column].setValue(token);
+        return true;
     }   
 
     return {getBoard, addMove};
