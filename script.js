@@ -185,13 +185,13 @@ function displayGame() {
     
     for (let i = 0; i < 9; i++){
         let gameSquare = document.createElement('div');
+        gameSquare.classList.add('gameSquare');
 
         gameSquare.textContent = `${i + 1}`;
         gameSquare.style.backgroundColor = 'lightblue';
-        gameSquare.style.width = '100px';
-        gameSquare.style.height = '100px';
-        gameSquare.style.display = 'inline-block';
-        gameSquare.style.margin = '5px';
+        gameSquare.style.border = '1px solid black';
+        
+        
 
 
         container.appendChild(gameSquare);
