@@ -6,10 +6,10 @@ header {
 }
 
 h1 {
-    color: lightseagreen;
+    color: black;
 }
 
-main, .gameSquare {
+main {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,4 +21,17 @@ main, .gameSquare {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+}
+
+.gameSquare {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: lightblue;
+    border: 1px solid black;
+}
+
+.gameSquare:hover {
+    background-color: lightskyblue;
 }
