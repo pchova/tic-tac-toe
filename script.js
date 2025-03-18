@@ -177,3 +177,25 @@ const DisplayController = (function() {
 
     return {getActivePlayer, playRound, printBoard};
 })();
+
+
+/* ****** DOM/Display Logic Below ****** */
+function displayGame() {
+    const container = document.querySelector(".container");
+    
+    for (let i = 0; i < 9; i++){
+        let gameSquare = document.createElement('div');
+
+        gameSquare.textContent = `${i + 1}`;
+        gameSquare.style.backgroundColor = 'lightblue';
+        gameSquare.style.width = '100px';
+        gameSquare.style.height = '100px';
+        gameSquare.style.display = 'inline-block';
+        gameSquare.style.margin = '5px';
+
+
+        container.appendChild(gameSquare);
+    }
+}
+
+displayGame();
