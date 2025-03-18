@@ -184,16 +184,11 @@ function displayGame() {
     const container = document.querySelector(".container");
     
     for (let i = 0; i < 9; i++){
-        let gameSquare = document.createElement('div');
+        let gameSquare = document.createElement('button');
+
         gameSquare.classList.add('gameSquare');
-
         gameSquare.textContent = `${i + 1}`;
-        gameSquare.style.backgroundColor = 'lightblue';
-        gameSquare.style.border = '1px solid black';
         
-        
-
-
         container.appendChild(gameSquare);
     }
 }
