@@ -182,32 +182,40 @@ const DisplayController = (function() {
 /* ****** DOM/Display Logic Below ****** */
 function renderBoard() {
     //get all gamesquare buttons from the DOM 
-    buttons = document.querySelectorAll(".gameSquare");
-
-    const board = DisplayController.printBoard();
+    const buttons = document.querySelectorAll(".gameSquare");
+    const board = DisplayController.printBoard().displayBoard;
     
     //loop through the 3x3 board
     buttons.forEach((button, index) => {
-        //set text content of each button to match the board state
         let row = Math.floor(index / 3);
-        let col = index % 3;
-        button.textContent = board[row][col];
+        let column = (index % 3);
+        button.textContent = board[row][column];
     });
 }
 
 function displayGame() {
     const container = document.querySelector(".container");
+
     /* create 3x3 grid buttons */ 
     for (let i = 0; i < 9; i++){
         let gameSquare = document.createElement("button");
-
         gameSquare.classList.add("gameSquare");
-
         container.appendChild(gameSquare);
     }
 
-    //attach event listeners to call playRound(row, col)
-    //after a move, update the board by calling renderBoard()
+    // attach eventListeners to each button on board
+    document.querySelectorAll(".gameSquare").forEach((button, index) => {
+        let row = Math.floor(index / 3);
+        let column = (index % 3);
+
+        button.addEventListener('click', () => {
+            //attach event listeners to call playRound(row, col)
+            playRound(row, column);
+            //after a move, update the board by calling renderBoard()
+            renderBoard();
+        });
+    })
 }
 
 displayGame();
+
