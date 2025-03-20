@@ -172,7 +172,7 @@ const DisplayController = (function() {
     const printBoard = () => {
         const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
         console.log(displayBoard);
-        return displayBoard;
+        return {displayBoard};
     } 
 
     return {getActivePlayer, playRound, printBoard};
@@ -180,17 +180,34 @@ const DisplayController = (function() {
 
 
 /* ****** DOM/Display Logic Below ****** */
+function renderBoard() {
+    //get all gamesquare buttons from the DOM 
+    buttons = document.querySelectorAll(".gameSquare");
+
+    const board = DisplayController.printBoard();
+    
+    //loop through the 3x3 board
+    buttons.forEach((button, index) => {
+        //set text content of each button to match the board state
+        let row = Math.floor(index / 3);
+        let col = index % 3;
+        button.textContent = board[row][col];
+    });
+}
+
 function displayGame() {
     const container = document.querySelector(".container");
-    
+    /* create 3x3 grid buttons */ 
     for (let i = 0; i < 9; i++){
-        let gameSquare = document.createElement('button');
+        let gameSquare = document.createElement("button");
 
-        gameSquare.classList.add('gameSquare');
-        gameSquare.textContent = `${i + 1}`;
-        
+        gameSquare.classList.add("gameSquare");
+
         container.appendChild(gameSquare);
     }
+
+    //attach event listeners to call playRound(row, col)
+    //after a move, update the board by calling renderBoard()
 }
 
 displayGame();
