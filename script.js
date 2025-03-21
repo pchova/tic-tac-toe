@@ -106,12 +106,15 @@ const DisplayController = (function() {
         if (getCount() === 8 || determineWinner()) {
             console.log(determineWinner() ? `${activePlayer.name} won!` : "Tie. Please play again!");
             printBoard();
-            return restartGame();
+            renderBoard();
+            //add function that takes user input to restart game or end game here
+            return;
         }
 
         setCount();
         switchPlayerTurn();
         printNextRound();
+        renderBoard();
     }
 
     /* determineWinner() checks all instances of 3 in a rows on the board 
@@ -166,6 +169,7 @@ const DisplayController = (function() {
         }
 
         printBoard();
+        renderBoard();
     }
 
     /* printBoard() maps board array and displays all values in Cell */
@@ -203,19 +207,17 @@ function displayGame() {
         container.appendChild(gameSquare);
     }
 
-    // attach eventListeners to each button on board
+    /* select each button on board to attach event listeners to call playRound(row, col) */
     document.querySelectorAll(".gameSquare").forEach((button, index) => {
         let row = Math.floor(index / 3);
         let column = (index % 3);
 
         button.addEventListener('click', () => {
-            //attach event listeners to call playRound(row, col)
             playRound(row, column);
-            //after a move, update the board by calling renderBoard()
+            /* update the DOM board to reflect each round */
             renderBoard();
         });
     })
 }
-
 displayGame();
 
