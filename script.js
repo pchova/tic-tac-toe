@@ -76,6 +76,13 @@ const DisplayController = (function() {
         }
     ]
 
+    const displayUsers = document.querySelector(".displayUsers");
+    displayUsers.textContent = `user: ${players[0].name} token: ${players[0].token}
+    | user: ${players[1].name} token: ${players[1].token}`;
+
+    const displayStatus = document.querySelector(".displayStatus");
+    displayStatus.textContent = `it's ${players[0].name}'s turn!`;
+
     console.log(`user: ${players[0].name}, token: ${players[0].token}`);
     console.log(`user: ${players[1].name}, token: ${players[1].token}`);
     console.log(`Its ${players[0].name}'s turn first!`);
@@ -113,6 +120,7 @@ const DisplayController = (function() {
 
         setCount();
         switchPlayerTurn();
+        updateStatus();     
         printNextRound();
         renderBoard();
     }
@@ -157,6 +165,7 @@ const DisplayController = (function() {
     /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
     const restartGame = () => {
         switchPlayerTurn();
+        updateStatus();
         console.log(`Restarting Game....it's ${activePlayer.name}'s turn!`);
 
         count = 0;
@@ -184,6 +193,14 @@ const DisplayController = (function() {
 
 
 /* ****** DOM/Display Logic Below ****** */
+function updateStatus() {
+    const displayStatus = document.querySelector(".displayStatus");
+    const status = DisplayController.getActivePlayer().name;
+
+    displayStatus.textContent = `it's ${status}'s turn!`;
+
+}
+
 function renderBoard() {
     //get all gamesquare buttons from the DOM 
     const buttons = document.querySelectorAll(".gameSquare");
