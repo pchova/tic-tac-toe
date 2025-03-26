@@ -111,11 +111,12 @@ const DisplayController = (function() {
         }
 
         if (getCount() === 8 || determineWinner()) {
-            console.log(determineWinner() ? `${activePlayer.name} won!` : "Tie. Please play again!");
-            printBoard();
+            console.log(determineWinner() ? updateWinner() : updateTie());
+            return restartGame();
+            /* printBoard();
             renderBoard();
             //add function that takes user input to restart game or end game here
-            return;
+            return; */
         }
 
         setCount();
@@ -199,6 +200,20 @@ function updateStatus() {
 
     displayStatus.textContent = `it's ${status}'s turn!`;
 
+}
+
+function updateWinner() {
+    const displayStatus = document.querySelector(".displayStatus");
+    const status = DisplayController.getActivePlayer().name;
+
+    displayStatus.textContent = `${status} won!`;
+}
+
+function updateTie() {
+    const displayStatus = document.querySelector(".displayStatus");
+    const status = DisplayController.getActivePlayer().name;
+
+    displayStatus.textContent = `It's a tie!`;
 }
 
 function renderBoard() {
