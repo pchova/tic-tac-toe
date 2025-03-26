@@ -111,9 +111,10 @@ const DisplayController = (function() {
         }
 
         if (getCount() === 8 || determineWinner()) {
+            renderBoard();
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
-            restartGame();
+            setTimeout(restartGame, 1000);
             return;
         }
 
