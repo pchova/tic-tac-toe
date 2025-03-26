@@ -111,17 +111,15 @@ const DisplayController = (function() {
         }
 
         if (getCount() === 8 || determineWinner()) {
-            console.log(determineWinner() ? updateWinner() : updateTie());
-            return restartGame();
-            /* printBoard();
-            renderBoard();
-            //add function that takes user input to restart game or end game here
-            return; */
+            let winner = determineWinner();
+            winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
+            restartGame();
+            return;
         }
 
         setCount();
         switchPlayerTurn();
-        updateStatus();     
+        updateStatus("playerStatus");     
         printNextRound();
         renderBoard();
     }
@@ -165,9 +163,8 @@ const DisplayController = (function() {
 
     /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
     const restartGame = () => {
-        switchPlayerTurn();
-        updateStatus();
-        console.log(`Restarting Game....it's ${activePlayer.name}'s turn!`);
+        //switchPlayerTurn();
+        updateStatus("restart");
 
         count = 0;
 
@@ -185,7 +182,7 @@ const DisplayController = (function() {
     /* printBoard() maps board array and displays all values in Cell */
     const printBoard = () => {
         const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
-        console.log(displayBoard);
+        //console.log(displayBoard);
         return {displayBoard};
     } 
 
@@ -194,26 +191,26 @@ const DisplayController = (function() {
 
 
 /* ****** DOM/Display Logic Below ****** */
-function updateStatus() {
+function updateStatus(method) {
     const displayStatus = document.querySelector(".displayStatus");
-    const status = DisplayController.getActivePlayer().name;
+    const player = DisplayController.getActivePlayer().name;
 
-    displayStatus.textContent = `it's ${status}'s turn!`;
+    switch(method) {
+        case "playerStatus":
+            displayStatus.textContent = `it's ${player}'s turn!`;
+            break;
+        case "winnerStatus":
+            displayStatus.textContent = `${player} won!`;
+            break;
+        case "tieStatus":
+            displayStatus.textContent = `It's a tie!`;
+            break;
+        case "restart":
+            displayStatus.textContent = `Restarting Game....it's ${player}'s turn!`
+            break;
+    }
+    
 
-}
-
-function updateWinner() {
-    const displayStatus = document.querySelector(".displayStatus");
-    const status = DisplayController.getActivePlayer().name;
-
-    displayStatus.textContent = `${status} won!`;
-}
-
-function updateTie() {
-    const displayStatus = document.querySelector(".displayStatus");
-    const status = DisplayController.getActivePlayer().name;
-
-    displayStatus.textContent = `It's a tie!`;
 }
 
 function renderBoard() {
