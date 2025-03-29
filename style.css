@@ -1,12 +1,30 @@
+/* USER INTERFACE TEXT */
+h1 {
+    color: black;
+}
+
+.displayUsers {
+    display: flex;
+    gap: 116px; /* Adjusts spacing */
+    font-size: 18px;
+}
+
+.displayUsers > * {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjusts spacing */
+}
+
+.displayStatus {
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+/* FLEXBOX BODY FORMATTING */
 header {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 20px;
-}
-
-h1 {
-    color: black;
 }
 
 main {
@@ -29,7 +47,7 @@ main {
     justify-content: center;
     align-items: center;
 
-    background-color: lightblue;
+    background-color: whitesmoke;
     border: 1px solid black;
 }
 
