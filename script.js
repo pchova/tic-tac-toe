@@ -64,7 +64,7 @@ function Cell() {
 */
 const DisplayController = (function() {
     const player1 = CreatePlayer("pchova");
-    const player2 = CreatePlayer("anhellll");
+    const player2 = CreatePlayer("anhell");
     const players = [
         {
             name: player1.displayName,
@@ -77,14 +77,16 @@ const DisplayController = (function() {
     ]
 
     const displayUsers = document.querySelector(".displayUsers");
-    displayUsers.textContent = `user: ${players[0].name} token: ${players[0].token}
-    | user: ${players[1].name} token: ${players[1].token}`;
+    displayUsers.innerHTML = 
+        `<div><div>Player 1: ${players[0].name}</div> <div>Token: ${players[0].token}</div></div> 
+        <div><div>Player 2: ${players[1].name}</div> <div>Token: ${players[1].token}</div></div>`;
+
 
     const displayStatus = document.querySelector(".displayStatus");
     displayStatus.textContent = `it's ${players[0].name}'s turn!`;
 
-    console.log(`user: ${players[0].name}, token: ${players[0].token}`);
-    console.log(`user: ${players[1].name}, token: ${players[1].token}`);
+    console.log(`Player 1: ${players[0].name}, token: ${players[0].token}`);
+    console.log(`Player 2: ${players[1].name}, token: ${players[1].token}`);
     console.log(`Its ${players[0].name}'s turn first!`);
 
     /* switchPlayerTurn() switches between the two players
@@ -114,6 +116,7 @@ const DisplayController = (function() {
             renderBoard();
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
+            //add something here to let user press button to restart game, or do nothing
             setTimeout(restartGame, 1000);
             return;
         }
