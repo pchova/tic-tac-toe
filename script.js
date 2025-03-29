@@ -112,6 +112,8 @@ const DisplayController = (function() {
             return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
         }
 
+        renderBoard(); 
+
         if (getCount() === 8 || determineWinner()) {
             renderBoard();
             let winner = determineWinner();
@@ -167,7 +169,7 @@ const DisplayController = (function() {
 
     /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
     const restartGame = () => {
-        //switchPlayerTurn();
+        switchPlayerTurn();
         updateStatus("restart");
 
         count = 0;
@@ -246,7 +248,7 @@ function displayGame() {
         let column = (index % 3);
 
         button.addEventListener('click', () => {
-            playRound(row, column);
+            DisplayController.playRound(row, column);
             /* update the DOM board to reflect each round */
             renderBoard();
         });
