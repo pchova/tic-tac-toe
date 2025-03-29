@@ -1,9 +1,20 @@
+@font-face {
+    font-family: 'Gord';
+    src: url('Gord-Quick-Font/gordqucikblack-p7erv.otf') format('opentype');
+}
+
+:root {
+    --font: 'Gord', Helvetica;
+}
+
 /* USER INTERFACE TEXT */
 h1 {
     color: black;
+    font-family: var(--font);
 }
 
 .displayUsers {
+    font-family: var(--font);
     display: flex;
     gap: 116px; /* Adjusts spacing */
     font-size: 18px;
@@ -16,6 +27,7 @@ h1 {
 }
 
 .displayStatus {
+    font-family: var(--font);
     font-size: 18px;
     padding-top: 10px;
 }
