@@ -122,12 +122,12 @@ const DisplayController = (function() {
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
 
             //add button to let user to restart the game, or do nothing
-            const bottomDisplay = document.querySelector(".displayStatus");
+            const displayStatus = document.querySelector(".displayStatus");
             const restartBtn = document.createElement("button");
-            
+
             restartBtn.classList.add("restartBtn");
             restartBtn.textContent = "Restart Game";
-            bottomDisplay.appendChild(restartBtn);
+            displayStatus.appendChild(restartBtn);
 
             restartBtn.addEventListener('click', () => {
                 restartGame();
