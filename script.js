@@ -65,6 +65,7 @@ function Cell() {
 const DisplayController = (function() {
     const player1 = CreatePlayer("pchova");
     const player2 = CreatePlayer("anhell");
+
     const players = [
         {
             name: player1.displayName,
@@ -104,7 +105,7 @@ const DisplayController = (function() {
     ** Option to restart game  */
     const playRound = (row, column) => {
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
-            displayStatus.textContent = `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
+            displayStatus.textContent = `That spot is taken, please try again.`;
             return;
         }
 
@@ -120,17 +121,28 @@ const DisplayController = (function() {
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
 
-            //add button to let user to restart the game, or do nothing
+            //add buttons to let user play new round or restart the game
             const displayStatus = document.querySelector(".displayStatus");
-            const restartBtn = document.createElement("button");
 
+            const btnContainer = document.createElement("div");
+            btnContainer.classList.add("btnContainer");
+
+            const restartBtn = document.createElement("button");
             restartBtn.classList.add("restartBtn");
-            restartBtn.textContent = "Restart Game";
-            displayStatus.appendChild(restartBtn);
+            restartBtn.textContent = "Next Round";
+            btnContainer.appendChild(restartBtn);
+
+            const newGameBtn = document.createElement("button");
+            newGameBtn.classList.add("newGameBtn");
+            newGameBtn.textContent = "New Game";
+            btnContainer.appendChild(newGameBtn);
+
+            displayStatus.appendChild(btnContainer);
 
             restartBtn.addEventListener('click', () => {
                 restartGame();
             });
+            
             return;
         }
 
