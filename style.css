@@ -91,3 +91,7 @@ main {
 .gameSquare:hover {
     background-color: #00afb9;
 }
+
+.gameSquare:disabled {
+    color: black;
+}
