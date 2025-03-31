@@ -61,6 +61,10 @@ main {
 
     background-color: whitesmoke;
     border: 1px solid black;
+    font-family: var(--font);
+    font-size: 80px;
+    padding: 0;
+    margin: 0;
 }
 
 .gameSquare:hover {
