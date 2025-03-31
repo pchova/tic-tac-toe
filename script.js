@@ -79,7 +79,7 @@ const DisplayController = (function() {
     const displayUsers = document.querySelector(".displayUsers");
     displayUsers.innerHTML = 
         `<div><div>Player 1: ${players[0].name}</div> <div>Token: ${players[0].token}</div></div> 
-        <div><div>Player 2: ${players[1].name}</div> <div>Token: ${players[1].token}</div></div>`;
+         <div><div>Player 2: ${players[1].name}</div> <div>Token: ${players[1].token}</div></div>`;
 
 
     const displayStatus = document.querySelector(".displayStatus");
@@ -109,7 +109,8 @@ const DisplayController = (function() {
     const playRound = (row, column) => {
 
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
-            return `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
+            displayStatus.textContent = `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
+            return;
         }
 
         renderBoard(); 
