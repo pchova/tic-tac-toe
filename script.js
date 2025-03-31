@@ -85,9 +85,9 @@ const DisplayController = (function() {
     const displayStatus = document.querySelector(".displayStatus");
     displayStatus.textContent = `it's ${players[0].name}'s turn!`;
 
-    console.log(`Player 1: ${players[0].name}, token: ${players[0].token}`);
+    /* console.log(`Player 1: ${players[0].name}, token: ${players[0].token}`);
     console.log(`Player 2: ${players[1].name}, token: ${players[1].token}`);
-    console.log(`Its ${players[0].name}'s turn first!`);
+    console.log(`Its ${players[0].name}'s turn first!`); */
 
     /* switchPlayerTurn() switches between the two players
     ** getActivePlayer() returns whose turn it is */
@@ -117,10 +117,21 @@ const DisplayController = (function() {
 
         if (getCount() === 8 || determineWinner()) {
             renderBoard();
+
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
-            //add something here to let user press button to restart game, or do nothing
-            setTimeout(restartGame, 1000);
+
+            //add button to let user to restart the game, or do nothing
+            const bottomDisplay = document.querySelector(".displayStatus");
+            const restartBtn = document.createElement("button");
+            
+            restartBtn.classList.add("restartBtn");
+            restartBtn.textContent = "Restart Game";
+            bottomDisplay.appendChild(restartBtn);
+
+            restartBtn.addEventListener('click', () => {
+                restartGame();
+            });
             return;
         }
 
@@ -189,7 +200,6 @@ const DisplayController = (function() {
     /* printBoard() maps board array and displays all values in Cell */
     const printBoard = () => {
         const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
-        //console.log(displayBoard);
         return {displayBoard};
     } 
 
@@ -216,8 +226,6 @@ function updateStatus(method) {
             displayStatus.textContent = `Restarting Game....it's ${player}'s turn!`
             break;
     }
-    
-
 }
 
 function renderBoard() {
