@@ -3,7 +3,7 @@
 ** numMoves adds to score and returns each players score
 */
 function CreatePlayer(name) {
-    let displayName = "@" + name;
+    let displayName = name;
 
     return {displayName};
 }
@@ -85,10 +85,6 @@ const DisplayController = (function() {
     const displayStatus = document.querySelector(".displayStatus");
     displayStatus.textContent = `it's ${players[0].name}'s turn!`;
 
-    /* console.log(`Player 1: ${players[0].name}, token: ${players[0].token}`);
-    console.log(`Player 2: ${players[1].name}, token: ${players[1].token}`);
-    console.log(`Its ${players[0].name}'s turn first!`); */
-
     /* switchPlayerTurn() switches between the two players
     ** getActivePlayer() returns whose turn it is */
     let activePlayer = players[0];
@@ -107,7 +103,6 @@ const DisplayController = (function() {
     ** Plays more rounds till count = 8, displays winner/tie
     ** Option to restart game  */
     const playRound = (row, column) => {
-
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
             displayStatus.textContent = `${activePlayer.name}, spot (${row},${column}) is taken, please try again.`;
             return;
@@ -180,7 +175,6 @@ const DisplayController = (function() {
     /* printNextRound() displays current board state and active player's turn */
     const printNextRound = () => {
         printBoard();
-        console.log(`It's ${activePlayer.name}'s turn!`);
     }
 
     /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
@@ -189,7 +183,6 @@ const DisplayController = (function() {
             button.disabled = false;
         });
 
-        //switchPlayerTurn();
         updateStatus("restart");
 
         count = 0;
