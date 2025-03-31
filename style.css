@@ -3,11 +3,11 @@
     src: url('Gord-Quick-Font/gordqucikblack-p7erv.otf') format('opentype');
 }
 
-/* * {
+body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-} */
+} 
 
 :root {
     --font: 'Gord', Helvetica;
@@ -43,7 +43,7 @@ h1 {
     gap: 10px;
 }
 
-.restartBtn {
+.restartBtn, .newGameBtn {
     font-family: var(--font);
     font-size: 18px;
     letter-spacing: 0.8px;
@@ -51,7 +51,22 @@ h1 {
     color: white;
     border-radius: 10px;
     padding: 10px 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
+.restartBtn:hover {
+    color: #00afb9;
+}
+
+.newGameBtn:hover {
+    color: #00afb9;
+}
+
+.btnContainer {
+    display: flex;
+    gap: 40px;
+}
+
 
 /* FLEXBOX BODY FORMATTING */
 header {
@@ -73,6 +88,7 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .gameSquare {
