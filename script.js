@@ -118,6 +118,10 @@ const DisplayController = (function() {
         if (getCount() === 8 || determineWinner()) {
             renderBoard();
 
+            document.querySelectorAll(".gameSquare").forEach(button => {
+                button.disabled = true;
+            });
+
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
 
@@ -181,7 +185,11 @@ const DisplayController = (function() {
 
     /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
     const restartGame = () => {
-        switchPlayerTurn();
+        document.querySelectorAll(".gameSquare").forEach(button => {
+            button.disabled = false;
+        });
+
+        //switchPlayerTurn();
         updateStatus("restart");
 
         count = 0;
@@ -255,7 +263,7 @@ function displayGame() {
     document.querySelectorAll(".gameSquare").forEach((button, index) => {
         let row = Math.floor(index / 3);
         let column = (index % 3);
-
+        
         button.addEventListener('click', () => {
             DisplayController.playRound(row, column);
             /* update the DOM board to reflect each round */
