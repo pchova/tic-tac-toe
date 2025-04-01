@@ -105,7 +105,7 @@ const DisplayController = (function() {
     ** Option to restart game  */
     const playRound = (row, column) => {
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
-            displayStatus.textContent = `That spot is taken, please try again.`;
+            updateStatus("spotTaken");
             return;
         }
 
@@ -113,10 +113,7 @@ const DisplayController = (function() {
 
         if (getCount() === 8 || determineWinner()) {
             renderBoard();
-
-            document.querySelectorAll(".gameSquare").forEach(button => {
-                button.disabled = true;
-            });
+            disableBoard();
 
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
@@ -142,7 +139,11 @@ const DisplayController = (function() {
             restartBtn.addEventListener('click', () => {
                 restartGame();
             });
-            
+
+            newGameBtn.addEventListener('click', () => {
+                //add something here to restart game
+            })
+
             return;
         }
 
@@ -191,9 +192,7 @@ const DisplayController = (function() {
 
     /* restartGame() switches player and sets count to 0 and clearing board array to be empty */
     const restartGame = () => {
-        document.querySelectorAll(".gameSquare").forEach(button => {
-            button.disabled = false;
-        });
+        enableBoard();
 
         updateStatus("restart");
 
@@ -221,6 +220,18 @@ const DisplayController = (function() {
 
 
 /* ****** DOM/Display Logic Below ****** */
+function disableBoard() {
+    document.querySelectorAll(".gameSquare").forEach(button => {
+        button.disabled = true;
+    })
+}
+
+function enableBoard() {
+    document.querySelectorAll(".gameSquare").forEach(button => {
+        button.disabled = false;
+    });
+}
+
 function updateStatus(method) {
     const displayStatus = document.querySelector(".displayStatus");
     const player = DisplayController.getActivePlayer().name;
@@ -238,6 +249,8 @@ function updateStatus(method) {
         case "restart":
             displayStatus.textContent = `Restarting Game....it's ${player}'s turn!`
             break;
+        case "spotTaken":
+            displayStatus.textContent = `That spot is taken, please try again.`;
     }
 }
 
