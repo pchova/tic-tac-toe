@@ -82,6 +82,7 @@ const DisplayController = (function() {
         `;
     
     let players = [];
+    const getPlayers = () => players;
     
     document.getElementById("startGame").addEventListener("click", () => {
         const p1 = document.getElementById("player1Name").value || "User 1";
@@ -102,6 +103,7 @@ const DisplayController = (function() {
         ];
 
         activePlayer = players[0];
+        
 
         displayUsers.innerHTML = 
             `<div>
@@ -230,7 +232,7 @@ const DisplayController = (function() {
         return {displayBoard};
     } 
 
-    return {getActivePlayer, playRound, printBoard, restartGame};
+    return {getActivePlayer, getPlayers, playRound, printBoard, restartGame};
 })();
 
 
@@ -270,7 +272,17 @@ function endRoundOptions() {
     });
 
     newGameBtn.addEventListener('click', () => {
-        //add something here to restart game
+        //reset game state in DisplayController
+
+        //clear board data
+        
+        //clear UI board
+
+        //Reset the UI for player input
+        
+        //reset status message
+        
+        //attach event listener to "start game" button
     });
 }
 
@@ -280,7 +292,7 @@ function updateStatus(method) {
 
     switch(method) {
         case "restart":
-            displayStatus.textContent = `Restarting Game....it's ${player}'s turn!`
+            displayStatus.textContent = `Restarting Round....it's ${player}'s turn!`
             break;
         case "playerStatus":
             displayStatus.textContent = `it's ${player}'s turn!`;
