@@ -68,12 +68,12 @@ const DisplayController = (function() {
     displayUsers.innerHTML = 
         `<div>
             <label>Player 1: </label>
-            <input type="text" id="player1Name" placeholder="type name">
+            <input type="text" id="player1Name" placeholder="Type name">
         </div> 
 
         <div>
             <label>Player 2: </label>
-            <input type="text" id="player2Name" placeholder="type name">
+            <input type="text" id="player2Name" placeholder="Type name">
         </div>
         
         <div>
