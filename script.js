@@ -63,32 +63,66 @@ function Cell() {
 ** and if anyone has won
 */
 const DisplayController = (function() {
-    const player1 = CreatePlayer("pchova");
-    const player2 = CreatePlayer("anhell");
-
-    const players = [
-        {
-            name: player1.displayName,
-            token: "X"
-        },
-        {
-            name: player2.displayName,
-            token: "O"
-        }
-    ]
 
     const displayUsers = document.querySelector(".displayUsers");
     displayUsers.innerHTML = 
-        `<div><div>Player 1: ${players[0].name}</div> <div>Token: ${players[0].token}</div></div> 
-         <div><div>Player 2: ${players[1].name}</div> <div>Token: ${players[1].token}</div></div>`;
+        `<div>
+            <label>Player 1: </label>
+            <input type="text" id="player1Name" placeholder="type name">
+        </div> 
 
+        <div>
+            <label>Player 2: </label>
+            <input type="text" id="player2Name" placeholder="type name">
+        </div>
+        
+        <div>
+            <button id="startGame">Start Game</button>
+        </div>
+        `;
+    
+    let players = [];
+    
+    document.getElementById("startGame").addEventListener("click", () => {
+        const p1 = document.getElementById("player1Name").value || "User 1";
+        const p2 = document.getElementById("player2Name").value || "User 2";
+
+        const player1 = CreatePlayer(p1);
+        const player2 = CreatePlayer(p2);
+
+        players = [
+            {
+                name: player1.displayName,
+                token: "X"
+            },
+            {
+                name: player2.displayName,
+                token: "O"
+            }
+        ];
+
+        activePlayer = players[0];
+
+        displayUsers.innerHTML = 
+            `<div>
+                <div>Player 1: ${players[0].name}</div>
+                <div>Token: ${players[0].token}</div>
+            </div>
+
+            <div>
+                <div>Player 2: ${players[1].name}</div>
+                <div>Token: ${players[1].token}</div>
+            </div>`;
+        
+        updateStatus("playerStatus");
+    });
 
     const displayStatus = document.querySelector(".displayStatus");
-    displayStatus.textContent = `it's ${players[0].name}'s turn!`;
+    displayStatus.textContent = "Waiting for players to start game....";
 
     /* switchPlayerTurn() switches between the two players
     ** getActivePlayer() returns whose turn it is */
-    let activePlayer = players[0];
+    //let activePlayer = players[0];
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
@@ -104,6 +138,7 @@ const DisplayController = (function() {
     ** Plays more rounds till count = 8, displays winner/tie
     ** Option to restart game  */
     const playRound = (row, column) => {
+
         if (Gameboard.addMove(row, column, activePlayer.token) === false) {
             updateStatus("spotTaken");
             return;
@@ -113,36 +148,16 @@ const DisplayController = (function() {
 
         if (getCount() === 8 || determineWinner()) {
             renderBoard();
+            
+            /* disableBoard() turns off gameSquare event listeners until next round */
             disableBoard();
 
             let winner = determineWinner();
             winner ? updateStatus("winnerStatus") : updateStatus("tieStatus");
 
-            //add buttons to let user play new round or restart the game
-            const displayStatus = document.querySelector(".displayStatus");
-
-            const btnContainer = document.createElement("div");
-            btnContainer.classList.add("btnContainer");
-
-            const restartBtn = document.createElement("button");
-            restartBtn.classList.add("restartBtn");
-            restartBtn.textContent = "Next Round";
-            btnContainer.appendChild(restartBtn);
-
-            const newGameBtn = document.createElement("button");
-            newGameBtn.classList.add("newGameBtn");
-            newGameBtn.textContent = "New Game";
-            btnContainer.appendChild(newGameBtn);
-
-            displayStatus.appendChild(btnContainer);
-
-            restartBtn.addEventListener('click', () => {
-                restartGame();
-            });
-
-            newGameBtn.addEventListener('click', () => {
-                //add something here to restart game
-            })
+            /* function adds two buttons to DOM to let user play a new round 
+            ** or to restart the game */
+            endRoundOptions();
 
             return;
         }
@@ -215,7 +230,7 @@ const DisplayController = (function() {
         return {displayBoard};
     } 
 
-    return {getActivePlayer, playRound, printBoard};
+    return {getActivePlayer, playRound, printBoard, restartGame};
 })();
 
 
@@ -232,11 +247,41 @@ function enableBoard() {
     });
 }
 
+function endRoundOptions() {
+    const displayStatus = document.querySelector(".displayStatus");
+
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("btnContainer");
+
+    const restartBtn = document.createElement("button");
+    restartBtn.classList.add("restartBtn");
+    restartBtn.textContent = "Next Round";
+    btnContainer.appendChild(restartBtn);
+
+    const newGameBtn = document.createElement("button");
+    newGameBtn.classList.add("newGameBtn");
+    newGameBtn.textContent = "New Game";
+    btnContainer.appendChild(newGameBtn);
+
+    displayStatus.appendChild(btnContainer);
+
+    restartBtn.addEventListener('click', () => {
+        DisplayController.restartGame();
+    });
+
+    newGameBtn.addEventListener('click', () => {
+        //add something here to restart game
+    });
+}
+
 function updateStatus(method) {
     const displayStatus = document.querySelector(".displayStatus");
     const player = DisplayController.getActivePlayer().name;
 
     switch(method) {
+        case "restart":
+            displayStatus.textContent = `Restarting Game....it's ${player}'s turn!`
+            break;
         case "playerStatus":
             displayStatus.textContent = `it's ${player}'s turn!`;
             break;
@@ -246,11 +291,9 @@ function updateStatus(method) {
         case "tieStatus":
             displayStatus.textContent = `It's a tie!`;
             break;
-        case "restart":
-            displayStatus.textContent = `Restarting Game....it's ${player}'s turn!`
-            break;
         case "spotTaken":
             displayStatus.textContent = `That spot is taken, please try again.`;
+            break;
     }
 }
 
