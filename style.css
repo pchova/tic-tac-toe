@@ -21,9 +21,11 @@ h1 {
 
 .displayUsers {
     font-family: var(--font);
-    display: flex;
     gap: 116px; 
     font-size: 18px;
+
+    display: flex;
+    align-items: center;
 }
 
 .displayUsers > * {
@@ -43,7 +45,7 @@ h1 {
     gap: 10px;
 }
 
-.restartBtn, .newGameBtn {
+.restartBtn, .newGameBtn, #startGame {
     font-family: var(--font);
     font-size: 18px;
     letter-spacing: 0.8px;
