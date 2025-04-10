@@ -81,6 +81,7 @@ const DisplayController = (function() {
         `;
     
     let players = [];
+    let activePlayer;
     const getPlayers = () => players;
     
     document.getElementById("startGame").addEventListener("click", () => {
@@ -244,8 +245,7 @@ const DisplayController = (function() {
         </div>
         `;
     
-        let players = [];
-        getPlayers();
+        players = [];
         count = 0;
 
         const newBoard = Gameboard.getBoard();
