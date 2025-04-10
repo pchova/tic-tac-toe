@@ -84,41 +84,6 @@ const DisplayController = (function() {
     let activePlayer;
     const getPlayers = () => players;
     
-    document.getElementById("startGame").addEventListener("click", () => {
-        const p1 = document.getElementById("player1Name").value || "User 1";
-        const p2 = document.getElementById("player2Name").value || "User 2";
-
-        const player1 = CreatePlayer(p1);
-        const player2 = CreatePlayer(p2);
-
-        players = [
-            {
-                name: player1.displayName,
-                token: "X"
-            },
-            {
-                name: player2.displayName,
-                token: "O"
-            }
-        ];
-
-        activePlayer = players[0];
-        
-
-        displayUsers.innerHTML = 
-            `<div>
-                <div>Player 1: ${players[0].name}</div>
-                <div>Token: ${players[0].token}</div>
-            </div>
-
-            <div>
-                <div>Player 2: ${players[1].name}</div>
-                <div>Token: ${players[1].token}</div>
-            </div>`;
-        
-        updateStatus("playerStatus");
-    });
-
     const displayStatus = document.querySelector(".displayStatus");
     displayStatus.textContent = "Waiting for players to start game....";
 
@@ -258,17 +223,31 @@ const DisplayController = (function() {
         printBoard();
         renderBoard();
         
-        const startBtn = document.getElementById("startGame");
-        startBtn.replaceWith(startBtn.cloneNode(true));
-        const newStartBtn = document.getElementById("startGame");
+        startGameBoardListener();
 
-        newStartBtn.addEventListener("click", () => {
+        const displayStatus = document.querySelector(".displayStatus");
+        displayStatus.textContent = "Waiting for players to start game....";
+
+        resetGameBoardListeners();
+        disableBoard();
+    }
+
+    /* printBoard() maps board array and displays all values in Cell */
+    const printBoard = () => {
+        const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
+        return {displayBoard};
+    }
+
+    const startGameBoardListener = () => {
+        const startBtn = document.getElementById("startGame");
+
+        startBtn.addEventListener("click", () => {
             const p1 = document.getElementById("player1Name").value || "User 1";
             const p2 = document.getElementById("player2Name").value || "User 2";
-
+    
             const player1 = CreatePlayer(p1);
             const player2 = CreatePlayer(p2);
-
+    
             players = [
                 {
                     name: player1.displayName,
@@ -279,35 +258,28 @@ const DisplayController = (function() {
                     token: "O"
                 }
             ];
-
+    
             activePlayer = players[0];
             
-
+    
             displayUsers.innerHTML = 
                 `<div>
                     <div>Player 1: ${players[0].name}</div>
                     <div>Token: ${players[0].token}</div>
                 </div>
-
+    
                 <div>
                     <div>Player 2: ${players[1].name}</div>
                     <div>Token: ${players[1].token}</div>
                 </div>`;
-        
+            
             updateStatus("playerStatus");
+            enableBoard();
+            resetGameBoardListeners();
         });
-
-        const displayStatus = document.querySelector(".displayStatus");
-        displayStatus.textContent = "Waiting for players to start game....";
-
-        resetGameBoardListeners();
     }
 
-    /* printBoard() maps board array and displays all values in Cell */
-    const printBoard = () => {
-        const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
-        return {displayBoard};
-    } 
+    startGameBoardListener();
 
     return {getActivePlayer, getPlayers, playRound, printBoard, restartGame, newGame};
 })();
@@ -390,6 +362,8 @@ function renderBoard() {
 }
 
 function resetGameBoardListeners() {
+    enableBoard();
+
     document.querySelectorAll(".gameSquare").forEach((button, index) => {
         //remove any existing listeners by cloning the button
         const newButton = button.cloneNode(true);
