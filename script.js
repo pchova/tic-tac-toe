@@ -225,13 +225,87 @@ const DisplayController = (function() {
         renderBoard();
     }
 
+    const newGame = () => {
+        const displayUsers = document.querySelector(".displayUsers");
+        displayUsers.innerHTML = "";
+        displayUsers.innerHTML = 
+        `<div>
+            <label>Player 1: </label>
+            <input type="text" id="player1Name" placeholder="Type name">
+        </div> 
+
+        <div>
+            <label>Player 2: </label>
+            <input type="text" id="player2Name" placeholder="Type name">
+        </div>
+        
+        <div>
+            <button id="startGame">Start Game</button>
+        </div>
+        `;
+    
+        let players = [];
+        getPlayers();
+        count = 0;
+
+        const newBoard = Gameboard.getBoard();
+        for(let i = 0; i < newBoard.length; i++) {
+            for (let j = 0; j < newBoard[i].length; j++) {
+                newBoard[i][j].setValue("");
+            }
+        }
+
+        printBoard();
+        renderBoard();
+    
+        document.getElementById("startGame").addEventListener("click", () => {
+            const p1 = document.getElementById("player1Name").value || "User 1";
+            const p2 = document.getElementById("player2Name").value || "User 2";
+
+            const player1 = CreatePlayer(p1);
+            const player2 = CreatePlayer(p2);
+
+            players = [
+                {
+                    name: player1.displayName,
+                    token: "X"
+                },
+                {
+                    name: player2.displayName,
+                    token: "O"
+                }
+            ];
+
+            activePlayer = players[0];
+            
+
+            displayUsers.innerHTML = 
+                `<div>
+                    <div>Player 1: ${players[0].name}</div>
+                    <div>Token: ${players[0].token}</div>
+                </div>
+
+                <div>
+                    <div>Player 2: ${players[1].name}</div>
+                    <div>Token: ${players[1].token}</div>
+                </div>`;
+        
+            updateStatus("playerStatus");
+        });
+
+        const displayStatus = document.querySelector(".displayStatus");
+        displayStatus.textContent = "Waiting for players to start game....";
+
+        resetGameBoardListeners();
+    }
+
     /* printBoard() maps board array and displays all values in Cell */
     const printBoard = () => {
         const displayBoard = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
         return {displayBoard};
     } 
 
-    return {getActivePlayer, getPlayers, playRound, printBoard, restartGame};
+    return {getActivePlayer, getPlayers, playRound, printBoard, restartGame, newGame};
 })();
 
 
@@ -272,17 +346,6 @@ function endRoundOptions() {
 
     newGameBtn.addEventListener('click', () => {
         DisplayController.newGame();
-        //reset game state in DisplayController
-
-        //clear board data
-        
-        //clear UI board
-
-        //Reset the UI for player input
-        
-        //reset status message
-        
-        //attach event listener to "start game" button
     });
 }
 
@@ -321,6 +384,8 @@ function renderBoard() {
         button.textContent = board[row][column];
     });
 }
+
+
 
 function displayGame() {
     const container = document.querySelector(".container");
