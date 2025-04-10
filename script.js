@@ -385,7 +385,22 @@ function renderBoard() {
     });
 }
 
+function resetGameBoardListeners() {
+    document.querySelectorAll(".gameSquare").forEach((button, index) => {
+        //remove any existing listeners by cloning the button
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
 
+        //re-attach event listener
+        let row = Math.floor(index / 3);
+        let column = (index % 3);
+
+        newButton.addEventListener('click', () => {
+            DisplayController.playRound(row, column);
+            renderBoard();
+        });
+    });
+}
 
 function displayGame() {
     const container = document.querySelector(".container");
