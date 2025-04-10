@@ -63,7 +63,6 @@ function Cell() {
 ** and if anyone has won
 */
 const DisplayController = (function() {
-
     const displayUsers = document.querySelector(".displayUsers");
     displayUsers.innerHTML = 
         `<div>
@@ -257,7 +256,7 @@ function endRoundOptions() {
 
     const restartBtn = document.createElement("button");
     restartBtn.classList.add("restartBtn");
-    restartBtn.textContent = "Next Round";
+    restartBtn.textContent = "New Round";
     btnContainer.appendChild(restartBtn);
 
     const newGameBtn = document.createElement("button");
@@ -272,6 +271,7 @@ function endRoundOptions() {
     });
 
     newGameBtn.addEventListener('click', () => {
+        DisplayController.newGame();
         //reset game state in DisplayController
 
         //clear board data
@@ -292,7 +292,7 @@ function updateStatus(method) {
 
     switch(method) {
         case "restart":
-            displayStatus.textContent = `Restarting Round....it's ${player}'s turn!`
+            displayStatus.textContent = `Restarting Round....it's ${player}'s turn!`;
             break;
         case "playerStatus":
             displayStatus.textContent = `it's ${player}'s turn!`;
