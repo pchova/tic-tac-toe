@@ -257,8 +257,12 @@ const DisplayController = (function() {
 
         printBoard();
         renderBoard();
-    
-        document.getElementById("startGame").addEventListener("click", () => {
+        
+        const startBtn = document.getElementById("startGame");
+        startBtn.replaceWith(startBtn.cloneNode(true));
+        const newStartBtn = document.getElementById("startGame");
+
+        newStartBtn.addEventListener("click", () => {
             const p1 = document.getElementById("player1Name").value || "User 1";
             const p2 = document.getElementById("player2Name").value || "User 2";
 
